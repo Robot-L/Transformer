@@ -1,5 +1,6 @@
 package com.robot.transform.extend;
 
+import com.robot.transform.extend.transformer.ForeignKeyTransformer;
 import com.robot.transform.extend.unwrapper.IPageUnWrapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,5 +21,12 @@ public class TransformExtendForMyBatisPlusAutoConfiguration {
         return new IPageUnWrapper<>();
     }
 
+    /**
+     * 注册外键转换器
+     */
+    @Bean
+    public ForeignKeyTransformer foreignKeyTransformer() {
+        return new ForeignKeyTransformer();
+    }
 
 }
