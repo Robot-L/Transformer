@@ -2,8 +2,11 @@ package com.robot.transform.extend.annotation;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.robot.transform.annotation.Transform;
 import com.robot.transform.extend.transformer.ForeignKeyTransformer;
+import com.robot.transform.serialize.TransformSerializer;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
@@ -17,16 +20,17 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-
 @Transform(transformer = ForeignKeyTransformer.class)
+@JsonSerialize(using = TransformSerializer.class)
+@JacksonAnnotationsInside
 public @interface TransformFK {
     /**
-     * 来源字段
+     * 目标字段
      * <p>
-     * 默认自动推断（推断规则：如注解标注的字段是userName，自动推断结果为“user”，“userId”或“userCode”）
+     * 默认自动推断（推断规则：如注解标注的字段是sex，自动推断结果为“sexName”，“sexId”或“sexCode”）
      */
     @AliasFor(annotation = Transform.class)
-    String from() default "";
+    String value() default "";
 
     /**
      * 外键表的 mapper-class，必须实现自BaseMapper接口

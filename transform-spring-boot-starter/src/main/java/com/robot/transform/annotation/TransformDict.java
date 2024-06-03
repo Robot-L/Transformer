@@ -1,5 +1,8 @@
 package com.robot.transform.annotation;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.robot.transform.serialize.TransformSerializer;
 import com.robot.transform.transformer.IDictTransformer;
 import org.springframework.core.annotation.AliasFor;
 
@@ -14,17 +17,18 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-
 @Transform(transformer = IDictTransformer.class)
-public @interface TransformDict {
+@JsonSerialize(using = TransformSerializer.class)
+@JacksonAnnotationsInside
+public @interface TransformDict{
 
     /**
-     * 来源字段
+     * 目标字段
      * <p>
-     * 默认自动推断（推断规则：如注解标注的字段是userName，自动推断结果为“user”，“userId”或“userCode”）
+     * 默认自动推断（推断规则：如注解标注的字段是sex，自动推断结果为“sexName”，“sexId”或“sexCode”）
      */
     @AliasFor(annotation = Transform.class)
-    String from() default "";
+    String value() default "";
 
     /**
      * 组名

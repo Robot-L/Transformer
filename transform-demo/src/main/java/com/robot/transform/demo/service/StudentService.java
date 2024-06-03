@@ -28,7 +28,7 @@ public class StudentService {
         // 班级id，随机生成
         student.setClassId(RandomUtils.nextLong(1, 10));
         // 性别，随机生成
-        student.setSex(RandomUtils.nextBoolean() ? Sex.MALE.getCode() : Sex.FEMALE.getCode());
+        student.setSex(RandomUtils.nextBoolean() ? Sex.MALE : Sex.FEMALE);
         // 爱好，随机生成
         student.setHobby(RandomUtils.nextInt(0, 4));
         return student;
