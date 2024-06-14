@@ -12,10 +12,7 @@ import com.robot.transform.demo.service.StudentService;
 import com.robot.transform.demo.service.convert.StudentConvert;
 import com.robot.transform.extend.TransformExtendForMyBatisPlusAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -106,7 +103,7 @@ public class StudentController {
      * @see TransformExtendForMyBatisPlusAutoConfiguration Page解包器示例
      */
     @GetMapping("/page")
-    public IPage<StudentVO> getStudentPage() {
+    public IPage<StudentVO> getStudentPage(@RequestParam(required = false) Sex sex) {
         return new Page<StudentVO>().setRecords(getStudentForList(100));
     }
 

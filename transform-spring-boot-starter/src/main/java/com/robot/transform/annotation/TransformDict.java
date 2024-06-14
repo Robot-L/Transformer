@@ -1,8 +1,5 @@
 package com.robot.transform.annotation;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.robot.transform.serialize.TransformSerializer;
 import com.robot.transform.transformer.IDictTransformer;
 import org.springframework.core.annotation.AliasFor;
 
@@ -18,9 +15,7 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.FIELD})
 @Transform(transformer = IDictTransformer.class)
-@JsonSerialize(using = TransformSerializer.class)
-@JacksonAnnotationsInside
-public @interface TransformDict{
+public @interface TransformDict {
 
     /**
      * 目标字段

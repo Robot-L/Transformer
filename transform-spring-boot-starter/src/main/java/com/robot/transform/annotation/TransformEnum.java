@@ -1,9 +1,6 @@
 package com.robot.transform.annotation;
 
 
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.robot.transform.serialize.TransformSerializer;
 import com.robot.transform.transformer.EnumTransformer;
 import org.springframework.core.annotation.AliasFor;
 
@@ -18,8 +15,6 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.FIELD})
 @Transform(transformer = EnumTransformer.class)
-@JsonSerialize(using = TransformSerializer.class)
-@JacksonAnnotationsInside
 public @interface TransformEnum {
     /**
      * 目标字段

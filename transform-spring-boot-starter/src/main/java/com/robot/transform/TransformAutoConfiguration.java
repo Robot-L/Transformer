@@ -1,6 +1,8 @@
 package com.robot.transform;
 
 
+import com.robot.transform.serialize.JacksonHttpMessageConverter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,4 +18,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.**.transformer")
 public class TransformAutoConfiguration {
 
+    @Bean
+    public JacksonHttpMessageConverter jacksonHttpMessageConverter() {
+        return new JacksonHttpMessageConverter();
+    }
 }

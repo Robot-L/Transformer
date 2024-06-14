@@ -50,4 +50,6 @@ public class StudentVO {
     // 同桌（嵌套转换）
     private StudentVO deskmate;
 
+    private String email;
+
 }

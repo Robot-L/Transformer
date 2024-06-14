@@ -37,11 +37,6 @@
             <version>3.12.0</version>
         </dependency>
         <dependency>
-            <groupId>io.github.luo-zhan</groupId>
-            <artifactId>easy-enum</artifactId>
-            <version>1.3.1-RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-core</artifactId>
             <version>3.5.2</version>

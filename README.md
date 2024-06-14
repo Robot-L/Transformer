@@ -91,9 +91,12 @@ public class StudentVO {
     private String className;
 }
 ```
-  在文本字段上使用转换注解，其中`@TransformEnum`、`@TransformDict`为内置注解，`@TransformClass`为自定义注解，组件支持自定义注解来提高扩展性，自定义注解的使用说明见下文wiki
+
+在文本字段上使用转换注解，其中`@TransformEnum`、`@TransformDict`为内置注解，`@TransformClass`
+为自定义注解，组件支持自定义注解来提高扩展性，自定义注解的使用说明见下文wiki
 
 ### 2. 在查询接口的方法上添加`@Transform`注解，大功告成！
+
    ```java
    /** 学生接口 */
    @RestController
@@ -143,6 +146,7 @@ public class StudentVO {
 完整示例代码见项目中`transform-demo`模块的`StudentController`类
 
 ## 依赖 / Dependency
+
    ```xml
    <dependency>
        <groupId>io.github.luo-zhan</groupId>
