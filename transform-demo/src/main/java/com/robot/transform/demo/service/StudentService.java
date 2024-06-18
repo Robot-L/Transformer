@@ -31,7 +31,6 @@ public class StudentService {
         student.setSex(RandomUtils.nextBoolean() ? Sex.MALE : Sex.FEMALE);
         // 爱好，随机生成
         student.setHobby(RandomUtils.nextInt(0, 4));
-        student.setEmail("aaaaaa");
         return student;
     }
 

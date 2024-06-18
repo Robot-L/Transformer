@@ -3,6 +3,7 @@ package com.robot.transform.serialize;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.robot.dict.spring.jackson.DictModule;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 /**
@@ -32,5 +33,8 @@ public class JacksonHttpMessageConverter extends MappingJackson2HttpMessageConve
 
         objectMapper.registerModule(module);
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        //枚举
+        objectMapper.registerModule(new DictModule());
     }
 }

@@ -21,5 +21,4 @@ public class Student {
     private Integer hobby;
     // 班级-需班级表翻译（class表根据id查询name）
     private Long classId;
-    private String email;
 }

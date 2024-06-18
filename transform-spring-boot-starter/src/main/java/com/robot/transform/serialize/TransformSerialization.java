@@ -105,7 +105,7 @@ public class TransformSerialization {
             String possibleCode = possibleName;
             if (StringUtils.isBlank(targetFieldName)) {
                 possibleName = String.format("set%sName", sourceFiledName);
-                possibleCode = String.format("set%sCode", possibleCode);
+                possibleCode = String.format("set%sCode", sourceFiledName);
             }
             Class cls = outObj.getClass();
             String finalPossibleName = possibleName;
@@ -121,26 +121,20 @@ public class TransformSerialization {
         @Override
         public void serialize(Object obj, JsonGenerator gen, SerializerProvider provider) {
             try {
-                Object originValue = obj;
-                Object value = null;
-                //枚举特殊处理
-                if (obj instanceof Dict) {
-                    Dict dict = (Dict) obj;
-                    originValue = dict.getCode();
-                }
+                Object transValue = null;
                 //输出原始值
-                gen.writeObject(originValue);
+                gen.writeObject(obj);
 
                 Transformer transformerObj = SpringContextUtil.getBean(transformer);
                 if (transformerObj != null) {
                     //调用转换器
-                    value = transformerObj.transform(obj, this.transformAnnotation);
+                    transValue = transformerObj.transform(obj, this.transformAnnotation);
                 }
                 String filedName = gen.getOutputContext().getCurrentName();
                 Object outObj = gen.getOutputContext().getCurrentValue();
                 String targetFieldName = getTargetFieldName();
                 //设置转换后的值到目标字段
-                setTargetFiledValue(value, filedName, outObj, targetFieldName);
+                setTargetFiledValue(transValue, filedName, outObj, targetFieldName);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
