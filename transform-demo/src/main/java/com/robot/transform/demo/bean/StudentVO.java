@@ -1,6 +1,5 @@
 package com.robot.transform.demo.bean;
 
-import com.robot.transform.annotation.Transform;
 import com.robot.transform.annotation.TransformDict;
 import com.robot.transform.annotation.TransformEnum;
 import com.robot.transform.demo.controller.transform.TransformClass;
@@ -25,32 +24,29 @@ public class StudentVO {
     private String name;
 
     // 性别-枚举（0-男，1-女）
-    private Integer sex;
+    @TransformEnum
+    private Sex sex;
 
     // 性别名称（枚举转换）
-    @TransformEnum(Sex.class)
     private String sexName;
 
     // 爱好code
+    @TransformDict(group = "hobby")
     private Integer hobby;
 
     // 爱好名称（数据字典转换）
-    @TransformDict(group = "hobby")
     private String hobbyName;
 
     // 班级id
+    @TransformClass("className")
     private Long classId;
 
     // 班级名称（自定义转换：根据班级id查询name）
-    @TransformClass
     private String className;
 
     // 小组成员（嵌套转换）
-    @Transform
     private List<StudentVO> team;
 
     // 同桌（嵌套转换）
-    @Transform
     private StudentVO deskmate;
-
 }

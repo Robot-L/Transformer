@@ -14,17 +14,16 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-
 @Transform(transformer = IDictTransformer.class)
 public @interface TransformDict {
 
     /**
-     * 来源字段
+     * 目标字段
      * <p>
-     * 默认自动推断（推断规则：如注解标注的字段是userName，自动推断结果为“user”，“userId”或“userCode”）
+     * 默认自动推断（推断规则：如注解标注的字段是sex，自动推断结果为“sexName”，“sexId”或“sexCode”）
      */
     @AliasFor(annotation = Transform.class)
-    String from() default "";
+    String value() default "";
 
     /**
      * 组名

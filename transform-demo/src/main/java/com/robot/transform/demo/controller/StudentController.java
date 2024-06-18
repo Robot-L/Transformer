@@ -3,10 +3,8 @@ package com.robot.transform.demo.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.robot.dict.Dict;
-import com.robot.transform.annotation.Transform;
 import com.robot.transform.demo.bean.ResultWrapper;
 import com.robot.transform.demo.bean.StudentVO;
-import com.robot.transform.demo.config.TransformConfig;
 import com.robot.transform.demo.enums.Sex;
 import com.robot.transform.demo.service.ClassService;
 import com.robot.transform.demo.service.DictionaryService;
@@ -14,10 +12,7 @@ import com.robot.transform.demo.service.StudentService;
 import com.robot.transform.demo.service.convert.StudentConvert;
 import com.robot.transform.extend.TransformExtendForMyBatisPlusAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -56,7 +51,7 @@ public class StudentController {
         String className = classService.getName(studentVO.getClassId());
         studentVO.setClassName(className);
         // 2、性别
-        Integer sex = studentVO.getSex();
+        Integer sex = studentVO.getSex().getCode();
         String sexName = Dict.getTextByCode(Sex.class, sex);
         studentVO.setSexName(sexName);
         // 3、爱好
@@ -75,7 +70,6 @@ public class StudentController {
      * @link 启动项目后点击链接 <a href="http://localhost:8080/student/1">查看效果</a>
      */
     @GetMapping("/{id}")
-    @Transform
     public StudentVO getStudent(@PathVariable Long id) {
         return studentConvert.toVo(studentService.getById(id));
     }
@@ -86,7 +80,6 @@ public class StudentController {
      * @link 启动项目后点击链接 <a href="http://localhost:8080/student/list/100">查看效果</a>
      */
     @GetMapping("/list/{number}")
-    @Transform
     public List<StudentVO> getStudentForList(@PathVariable Integer number) {
         // 示例代码，实际情况下应从db获取
         List<StudentVO> list = new ArrayList<>();
@@ -95,6 +88,9 @@ public class StudentController {
         }
         // 同桌和小组成员，用来测试嵌套转换功能
         list.get(0).setDeskmate(list.get(1));
+        List<StudentVO> team = new ArrayList<>();
+        team.add(list.get(1));
+        list.get(0).setTeam(team);
 
         return list;
     }
@@ -107,8 +103,7 @@ public class StudentController {
      * @see TransformExtendForMyBatisPlusAutoConfiguration Page解包器示例
      */
     @GetMapping("/page")
-    @Transform
-    public IPage<StudentVO> getStudentPage() {
+    public IPage<StudentVO> getStudentPage(@RequestParam(required = false) Sex sex) {
         return new Page<StudentVO>().setRecords(getStudentForList(100));
     }
 
@@ -116,11 +111,9 @@ public class StudentController {
      * 4、转换插件支持自定义包装类
      * 解包器在项目实际使用时需自己实现
      *
-     * @link 启动项目后点击链接 <a href="http://localhost:8080/student/wrapper">查看效果</a> 
-     * @see TransformConfig.ResultUnWrapper 自定义解包器示例
+     * @link 启动项目后点击链接 <a href="http://localhost:8080/student/wrapper">查看效果</a>
      */
     @GetMapping("/wrapper")
-    @Transform
     public ResultWrapper<StudentVO> getStudentWrapper() {
         return ResultWrapper.success(getStudent(1L));
     }

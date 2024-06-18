@@ -1,7 +1,6 @@
 package com.robot.transform.annotation;
 
 
-import com.robot.dict.Dict;
 import com.robot.transform.transformer.EnumTransformer;
 import org.springframework.core.annotation.AliasFor;
 
@@ -15,21 +14,13 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Target({ElementType.FIELD})
-
 @Transform(transformer = EnumTransformer.class)
 public @interface TransformEnum {
     /**
-     * 来源字段
+     * 目标字段
      * <p>
-     * 默认自动推断（推断规则：如注解标注的字段是userName，自动推断结果为“user”，“userId”或“userCode”）
+     * 默认自动推断（推断规则：如注解标注的字段是sex，自动推断结果为“sexName”，“sexId”或“sexCode”）
      */
     @AliasFor(annotation = Transform.class)
-    String from() default "";
-
-    /**
-     * 枚举class，必须实现了Dict接口
-     */
-    @SuppressWarnings("rawtypes")
-    Class<? extends Dict> value();
-
+    String value() default "";
 }

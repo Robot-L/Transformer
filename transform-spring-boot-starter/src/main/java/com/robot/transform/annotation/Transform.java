@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.FIELD})
 public @interface Transform {
 
     /**
@@ -21,11 +21,11 @@ public @interface Transform {
     Class<? extends Transformer> transformer() default Transformer.class;
 
     /**
-     * 来源字段
+     * 目标字段
      * <p>
-     * 默认自动推断（要求转换后字段名必须以Name结尾，推断规则：如注解标注的字段是userName，自动推断结果为“user”，“userId”或“userCode”）
+     * 默认自动推断（推断规则：如注解标注的字段是sex，自动推断结果为“sexName”，“sexId”或“sexCode”）
      */
-    String from() default "";
+    String value() default "";
 
     /**
      * 异步转换功能（即将实现，敬请期待）

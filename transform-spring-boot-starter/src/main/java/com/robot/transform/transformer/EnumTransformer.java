@@ -3,8 +3,7 @@ package com.robot.transform.transformer;
 import com.robot.dict.Dict;
 import com.robot.transform.annotation.TransformEnum;
 import org.springframework.lang.NonNull;
-
-import java.io.Serializable;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -12,12 +11,12 @@ import java.io.Serializable;
  *
  * @author R
  */
-public class EnumTransformer<T extends Serializable> implements Transformer<T, TransformEnum> {
+@Component
+public class EnumTransformer implements Transformer<Dict, TransformEnum> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public String transform(@NonNull T enumCode, TransformEnum annotation) {
-        return Dict.getTextByCode((Class<? extends Dict<T>>) annotation.value(), enumCode);
+    public String transform(@NonNull Dict dict, TransformEnum annotation) {
+        return dict.getText();
     }
-
 }

@@ -1,7 +1,8 @@
 package com.robot.transform.transformer;
 
-import com.robot.transform.annotation.Transform;
 import org.springframework.lang.NonNull;
+
+import java.lang.annotation.Annotation;
 
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.lang.NonNull;
  *
  * @author R
  */
-public interface SimpleTransformer<T> extends Transformer<T, Transform> {
+public interface SimpleTransformer<T> extends Transformer<T, Annotation> {
     /**
      * 转换
      *
@@ -19,7 +20,7 @@ public interface SimpleTransformer<T> extends Transformer<T, Transform> {
      * @return 转换后的值
      */
     @Override
-    default String transform(@NonNull T originalValue, @NonNull Transform transform) {
+    default String transform(@NonNull T originalValue, @NonNull Annotation transform) {
         return transform(originalValue);
     }
 

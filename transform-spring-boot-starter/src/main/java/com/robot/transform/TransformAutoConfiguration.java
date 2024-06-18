@@ -1,22 +1,10 @@
 package com.robot.transform;
 
 
-import com.robot.transform.annotation.Transform;
-import com.robot.transform.annotation.TransformDict;
-import com.robot.transform.transformer.EnumTransformer;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationListener;
+import com.robot.transform.serialize.JacksonHttpMessageConverter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.event.ContextRefreshedEvent;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
-import java.util.Map;
-
-import static com.robot.util.LambdaExceptionUtil.sure;
 
 
 /**
@@ -28,24 +16,10 @@ import static com.robot.util.LambdaExceptionUtil.sure;
  */
 @Configuration
 @ComponentScan("com.**.transformer")
-@Import({TransformAspect.class, EnumTransformer.class})
-public class TransformAutoConfiguration implements ApplicationListener<ContextRefreshedEvent> {
+public class TransformAutoConfiguration {
 
-
-    @Override
-    @SuppressWarnings("all")
-    public void onApplicationEvent(ContextRefreshedEvent event) {
-        // 注入自定义字典转换器
-        ApplicationContext applicationContext = event.getApplicationContext();
-        String dictTransformerBeanName = "dictTransformer";
-        if (applicationContext.containsBean(dictTransformerBeanName)) {
-            Transform annotation = TransformDict.class.getAnnotation(Transform.class);
-            InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotation);
-            Field field = sure(() -> invocationHandler.getClass().getDeclaredField("memberValues"));
-            field.setAccessible(true);
-            Map<String, Object> memberValues = (Map<String, Object>) sure(() -> field.get(invocationHandler));
-            memberValues.put("transformer", applicationContext.getBean(dictTransformerBeanName).getClass());
-            field.setAccessible(false);
-        }
+    @Bean
+    public JacksonHttpMessageConverter jacksonHttpMessageConverter() {
+        return new JacksonHttpMessageConverter();
     }
 }
